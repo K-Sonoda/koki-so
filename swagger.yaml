@@ -1,0 +1,1081 @@
+swagger: '2.0'
+info:
+  # description: 'This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.'
+  version: 0.0.1
+  title: 'API仕様書'
+  # termsOfService: 'http://swagger.io/terms/'
+  # contact:
+  #  email: apiteam@swagger.io
+  # license:
+  #   name: Apache-2.0
+  #   url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: api.simplecheck.jp 
+basePath: /v2 # 商用のベースパスはどうするんだっけ？
+schemes:
+  - http
+tags:
+  - name: 'レポート'
+    description: 'Simplecheckのレポート発行、取得、検索などを実施します。'
+paths:
+  '/report/{report_id}':
+    get:
+      tags:
+        - 'レポート'
+      summary: 'レポート取得'
+      description: 'SimplecheckのレポートIDを指定し、レポートを取得します。'
+      produces:
+        - application/json
+      parameters:
+        - name: report_id
+          in: path
+          description: 'SimplecheckのレポートIDです。レポート発行時に払い出されたIDを指定してください。'
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: '処理が正常終了しました。'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/content'
+        '401':
+          description: 'アクセス権限認証に失敗しました。APIKeyが不正、または接続元IPアドレスが許可されていません。'
+      security:
+        - APIKey: []
+securityDefinitions:
+  APIKey:
+    description: 'Simplecheckが提供するWebAPIを使用するためには、APIKeyが必要です。APIKeyの発行についてはSimpleform社にお問合せください。'
+    type: apiKey
+    name: x-api-key
+    in: header
+definitions:
+  content:
+    title: "Simplecheckが提供するレポートです。"
+    properties: 
+      notes: 
+        type: "array"
+        items: 
+          type: "string"
+      progress: 
+        type: "boolean"
+      pdf_url: 
+        type: "string"
+      company_profile: 
+        properties: 
+          company_registry: 
+            properties: 
+              acquired_datetime: 
+                type: "string"
+              corporate_number: 
+                type: "string"
+              corporate_registration_number: 
+                type: "string"
+              pdf_url: 
+                type: "string"
+              company_name: 
+                properties: 
+                  present: 
+                    type: "string"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              head_office: 
+                properties: 
+                  present:  
+                    properties: 
+                      postal_code: 
+                        type: "string"
+                      full_address: 
+                        type: "string"
+                      country: 
+                        type: "string"
+                      prefecture: 
+                        type: "string"
+                      prefecture_kana: 
+                        type: "string"
+                      city: 
+                        type: "string"
+                      city_kana: 
+                        type: "string"
+                      street: 
+                        type: "string"
+                      street_kana: 
+                        type: "string"
+                      building: 
+                        type: "string"
+                      building_kana: 
+                        type: "string"
+                    type: "object"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              public_notice_method: 
+                properties: 
+                  present: 
+                    properties: 
+                      electronic_notice: 
+                        type: "string"
+                      electronic_notice_url: 
+                        type: "string"
+                      official_gazette_notice: 
+                        type: "string"
+                      newspaper_notice: 
+                        type: "string"
+                      office_notice: 
+                        type: "string"
+                      full_text: 
+                        type: "string"
+                    type: "object"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              date_of_incorporation: 
+                type: "string"
+              objectives: 
+                properties: 
+                  present: 
+                    type: "string"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              outstanding_shares: 
+                properties: 
+                  present: 
+                    properties: 
+                      total: 
+                        type: "string"
+                      detail: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                    type: "object"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "object"
+                      properties: 
+                        total: 
+                          type: "string"
+                        detail: 
+                          type: "array"
+                          items: 
+                            type: "string"
+                        reg_item1: 
+                          type: "string"
+                        reg_date1: 
+                          type: "string"
+                        reg_item2: 
+                          type: "string"
+                        reg_date2: 
+                          type: "string"
+                type: "object"
+              issued_share_warrants: 
+                type: "string"
+              capital_amount: 
+                properties: 
+                  present: 
+                    type: "string"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              institutional_design: 
+                properties: 
+                  present: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              directors: 
+                properties: 
+                  present: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              representative_directors: 
+                properties: 
+                  present: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              auditors: 
+                properties: 
+                  present: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+              accounting_auditors: 
+                properties: 
+                  present: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                  history: 
+                    type: "array"
+                    items: 
+                      type: "string"
+                type: "object"
+            type: "object"
+          basic_information: 
+            properties: 
+              insurance: 
+                properties: 
+                  insured_people_count: 
+                    type: "string"
+                  evidence: 
+                    type: "string"
+                type: "object"
+              licenses: 
+                type: "array"
+                items: 
+                  type: "string"
+            type: "object"
+          location_information: 
+            properties: 
+              head_office: 
+                type: "string"
+              representatives: 
+                type: "array"
+                items: 
+                  type: "string"
+            type: "object"
+          financial_information: 
+            type: "array"
+            items: 
+              type: "string"
+        type: "object"
+      evaluation: 
+        properties: 
+          existence: 
+            properties: 
+              status: 
+                type: "string"
+              errors: 
+                type: "array"
+                items: 
+                  type: "string"
+              alert_level: 
+                type: "string"
+              detail: 
+                properties: 
+                  valid_address: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          flexible_office_address: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          suspicious_address: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                  occupied_address: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          company_name_on_mailbox: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                  activeness: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          recent_incorporation: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          reachable_company_website: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          gazette_info: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          insured_count: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          gbizinfo_info: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          tsr_info: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          tdb_info: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          prtimes_info: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                type: "object"
+            type: "object"
+          high_risk: 
+            properties: 
+              status: 
+                type: "string"
+              errors: 
+                type: "array"
+                items: 
+                  type: "string"
+              alert_level: 
+                type: "string"
+              detail: 
+                properties: 
+                  unnaturalness: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          recent_address_change: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          recent_company_name_change: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          recent_representatives_change: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          recent_board_members_change: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          too_many_objectives: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          too_many_same_name_companies: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                  adult_entertainment_business: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          amusement_business: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          sex_related_special_business: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          catering_entertainment_business: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                  high_risk_industry: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          adult_products: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          cryptocurrencies: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          jewelries: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          gambling: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          marijuana_cbd: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          information_products: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          spiritual_services: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          mlm_products: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          industrial_waste_disposal: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          secondhand_products: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          money_lending: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          debt_collection: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          type2_financial_services: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          npo_ngo: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                  negative_company_rumor: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          anti_social_forces: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          anti_market_forces: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          legal_violation: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          administrative_guidance: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          administrative_disposition: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                  negative_representatives_rumor: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          anti_social_forces: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          anti_market_forces: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          legal_violation: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          administrative_guidance: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          administrative_disposition: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                  government_watchlist: 
+                    properties: 
+                      status: 
+                        type: "string"
+                      errors: 
+                        type: "array"
+                        items: 
+                          type: "string"
+                      alert_level: 
+                        type: "string"
+                      detail: 
+                        properties: 
+                          aupmr_violation: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          asct_violation: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          mlit_violation: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          otit_violation: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                          fefta_violation: 
+                            properties: 
+                              status: 
+                                type: "string"
+                              errors: 
+                                type: "array"
+                                items: 
+                                  type: "string"
+                              alert_level: 
+                                type: "string"
+                              evidence: 
+                                type: "string"
+                            type: "object"
+                        type: "object"
+                    type: "object"
+                type: "object"
+            type: "object"
+        type: "object"
+      web_search_result: 
+        properties: 
+          company: 
+            type: "string"
+          representatives: 
+            type: "array"
+            items: 
+              type: "string"
+        type: "object"
+# externalDocs:
+#   description: Find out more about Swagger
+#   url: 'http://swagger.io'
