@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          if [ ('true' = 'false' || 'true' = 'true') && ('test' = 'fest' || 'test' = 'test') ]; then 
+          if [ {'itg1' = 'false' || 'itg1' = 'itg1'} && {'test' = 'fest' || 'test' = 'test'} ]; then 
             echo "true"
           else
             echo "false"
