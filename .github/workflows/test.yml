@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        echo "hello world!!"
-        if [ "true" = "true" ];
-          then echo "true"
-        fi
+          echo "hello world!!"
+          if [ "true" = "true" ];
+            then echo "true"
+          fi
