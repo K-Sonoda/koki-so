@@ -8,6 +8,6 @@ jobs:
     steps:
       - run: |
           echo "hello world!!"
-          if [ "true" = "true" ];
+          if [ "true" in ["true"] ];
             then echo "true"
           fi
