@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          if [ 'itg2' = 'itg1' ] || [ 'itg1' = 'itg1' ]; then 
-            if [ 'test' = 'hoge' ] || [ 'test' = 'test' ]; then
+          if [ 'itg2' != 'itg1' ] || [ 'itg1' != 'itg1' ]; then 
+            if [ 'test' != 'hoge' ]; then
               echo "true"
             else
               echo "false"
