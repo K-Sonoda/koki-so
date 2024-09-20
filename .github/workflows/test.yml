@@ -10,7 +10,7 @@ jobs:
           echo "hello world!!"
           if [ "true" = "false" || "true" = "true" ]; then 
             if [ "test" = "fest" 
-            \ "test" = "test" ];
+            \ || "test" = "test" ];
               then echo "true"
             else
               echo "false"
