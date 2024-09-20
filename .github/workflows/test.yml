@@ -9,5 +9,8 @@ jobs:
       - run: |
           echo "hello world!!"
           if [ "true" == "false" || "true" == "true" ];
-            then echo "true"
+            then if [ "test" == "test"];
+              then echo "true"
+            else
+              echo "false"
           fi
