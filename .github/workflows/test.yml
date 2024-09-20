@@ -2,12 +2,15 @@ name: GitHub Actions Demo
 
 on: [push]
 
+list01:
+  - true
+
 jobs:
   echo_hello_world:
     runs-on: ubuntu-latest
     steps:
       - run: |
           echo "hello world!!"
-          if [ "true" in ["true"] ];
+          if [ true in list01 ];
             then echo "true"
           fi
