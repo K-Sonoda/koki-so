@@ -8,8 +8,8 @@ jobs:
     steps:
       - run: |
           echo "hello world!!"
-          if [ "true" == "false" || "true" == "true" ]; then 
-            if [ "test" == "test"];
+          if [ "true" = "false" || "true" = "true" ]; then 
+            if [ "test" = "test" ];
               then echo "true"
             else
               echo "false"
