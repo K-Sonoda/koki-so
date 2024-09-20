@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          if [ {`'itg1' = 'itg1'`]; then 
+          if [ `'itg1' = 'itg1'`]; then 
             echo "true"
           else
             echo "false"
